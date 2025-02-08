@@ -1,4 +1,6 @@
 google-cloud-container
 Django
+django-cors-headers
+django-rest-framework
 db.sqlite3
 pre-commit

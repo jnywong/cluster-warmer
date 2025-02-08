@@ -18,6 +18,8 @@ from google.oauth2 import service_account
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "testserver"]
+
 # Create a SECRET_KEY.
 # Online tools can help generate this for you, e.g. https://www.miniwebtool.com/django-secret-key-generator/
 SECRET_KEY = ""
@@ -31,3 +33,6 @@ GCP_SA_KEY = ""
 GCP_CREDENTIALS = service_account.Credentials.from_service_account_file(
     Path.joinpath(BASE_DIR, GCP_SA_KEY)
 )
+
+# React settings
+CORS_ORIGIN_WHITELIST = [""]

@@ -34,12 +34,14 @@ repos:
     rev: "24.10.0"
     hooks:
       - id: black
+        exclude: ^.*\b(migrations)\b.*$
 
   # Lint: Python code
   - repo: https://github.com/pycqa/flake8
     rev: "7.1.1"
     hooks:
       - id: flake8
+        exclude: ^.*\b(migrations)\b.*$
 
   # Prevent known typos from being committed
   - repo: https://github.com/codespell-project/codespell
