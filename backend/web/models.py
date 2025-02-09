@@ -31,6 +31,17 @@ class Event(models.Model):
     An event model that stores information needed to prewarm a GKE cluster.
     """
 
+    class JobStatus(models.IntegerChoices):
+        """Enum for various job statuses."""
+
+        NOT_SUBMITTED = 0
+        PENDING = 1
+        QUEUED = 2
+        RUNNING = 3
+        COMPLETED = 4
+        FAILED = 5
+        CANCELLED = 6
+
     # the name of the event
     name = models.CharField(max_length=128)
 
@@ -51,6 +62,14 @@ class Event(models.Model):
 
     # memory per user
     memory_per_user = models.FloatField()
+
+    # celery job submitted?
+    job_submitted = models.BooleanField(default=False)
+
+    # celery job status
+    job_status = models.IntegerField(
+        default=JobStatus.NOT_SUBMITTED, choices=JobStatus.choices
+    )
 
     def __str__(self):
         return self.name
