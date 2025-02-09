@@ -1,11 +1,7 @@
 import Logo from './ui/logo';
-import { Button } from './ui/button';
 import FormComponent from './ui/events/create-form';
 import Image from 'next/image';
-
-function Header({ title }) {
-  return <h1>{title ? title : 'Default title'}</h1>;
-}
+import { Status } from './ui/status';
 
 export default function HomePage() {
   return (
@@ -26,7 +22,10 @@ export default function HomePage() {
             <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
           </Link> */}
         </div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col justify-center gap-6 rounded-lg px-6 py-10">
+          <div>
+            <Status />
+          </div>
           <div>
             <FormComponent />
           </div>
