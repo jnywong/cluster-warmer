@@ -13,6 +13,19 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
 
 
+class Cluster(models.Model):
+    """
+    Store cluster information retrieved from GKE API.
+
+    See management > commands > read_clusters.py
+    """
+
+    name = models.CharField(max_length=128)
+    machine_type = models.CharField(max_length=128)
+    cpus = models.IntegerField()
+    memory = models.IntegerField()  # GB
+
+
 class Event(models.Model):
     """
     An event model that stores information needed to prewarm a GKE cluster.
