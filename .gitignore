@@ -138,4 +138,5 @@ GitHub.sublime-settings
 !.vscode/extensions.json 
 .history
 
-*.json
+# GCP SA KEY
+backend/core/*.json 
