@@ -9,16 +9,16 @@ class Command(BaseCommand):
 
     def __init__(self):
         """
-        Get [vCPUs, memory (GB)] from machine types.
+        Get resources from machine types.
         """
         self._dict = {
             "e2-medium": [
-                1,
-                4,
+                1,  # vCPUs
+                4,  # Memory
             ],  # e2-medium: 2 vCPUs, 50% of CPU time = 100% CPU time and effectively consuming 1 core.
             "n2-standard-2": [
-                2,
-                8,
+                2,  # vCPUs
+                8,  # Memory
             ],  # https://cloud.google.com/compute/docs/general-purpose-machines#n2_series
         }
 
