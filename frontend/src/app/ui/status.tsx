@@ -4,7 +4,7 @@ export async function Status() {
 
   return (
     <div>
-      <h1 className="text-xl md:text-3xl">Status</h1>
+      <h1 className="text-3xl">Status</h1>
       <div className="py-4">
         <ul>
           {cluster.map((c) => (
