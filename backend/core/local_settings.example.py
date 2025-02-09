@@ -31,7 +31,7 @@ GCP_ZONE = ""
 GCP_CLUSTER = ""
 GCP_SA_KEY = ""
 GCP_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    Path.joinpath(BASE_DIR, GCP_SA_KEY)
+    Path.joinpath(Path(__file__).resolve().parent, GCP_SA_KEY)
 )
 
 # React settings
