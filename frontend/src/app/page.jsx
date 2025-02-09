@@ -1,4 +1,6 @@
 import Logo from './ui/logo';
+import { Button } from './ui/button';
+import FormComponent from './ui/events/create-form';
 import Image from 'next/image';
 
 function Header({ title }) {
@@ -24,14 +26,10 @@ export default function HomePage() {
             <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
           </Link> */}
         </div>
-        <div className="flex items-center justify-center">
-          <Image
-            src="/hero-desktop.jpg"
-            width={1000}
-            height={760}
-            className="hidden md:block"
-            alt="Hero image"
-          />
+        <div className="flex flex-col items-center justify-center">
+          <div>
+            <FormComponent />
+          </div>
         </div>
       </div>
     </main>

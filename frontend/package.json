@@ -12,6 +12,8 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@kubernetes/client-node": "^1.0.0",
+    "axios": "^1.7.9",
+    "clsx": "^2.1.1",
     "next": "15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
