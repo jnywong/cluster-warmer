@@ -34,6 +34,8 @@ GCP_CREDENTIALS = service_account.Credentials.from_service_account_file(
     Path.joinpath(Path(__file__).resolve().parent, GCP_SA_KEY)
 )
 
+# Machine list
+# WARNING: if altered, makemigrations and run python manage.py read_clusters
 MACHINE_LIST = {
     "e2-medium": [
         1,  # vCPUs

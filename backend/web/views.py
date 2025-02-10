@@ -1,10 +1,10 @@
 from django.views.generic import TemplateView
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
-from rest_framework.response import Response
 
 from .models import Cluster, Event
 from .serializers import ClusterSerializer, EventSerializer
+from .tasks import increase_nodepool
 
 
 class IndexView(TemplateView):
@@ -36,6 +36,14 @@ class EventViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods="POST")
     def create_and_submit(self, request):
-        self.create(request)
-
-        return Response("Event created and task submitted.")
+        response = self.create(request)
+        event_id = response.data["id"]
+        event = Event.objects.get(id=event_id)
+        start_time = event.start_time
+        num = event.num_users
+        machine = event.machine
+        result = increase_nodepool.apply_async(args=[num, machine], eta=start_time)
+        # result = increase_nodepool.apply_async(args=[num, machine], countdown=15)
+        event.task_submitted = True
+        event.task_id = result.id
+        return response
