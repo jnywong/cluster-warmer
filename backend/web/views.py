@@ -1,10 +1,12 @@
+import time
+
 from django.views.generic import TemplateView
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 
 from .models import Cluster, Event
 from .serializers import ClusterSerializer, EventSerializer
-from .tasks import increase_nodepool
+from .tasks import increase_nodepool, increase_nodes
 
 
 class IndexView(TemplateView):
@@ -42,8 +44,14 @@ class EventViewSet(viewsets.ModelViewSet):
         start_time = event.start_time
         num = event.num_users
         machine = event.machine
-        result = increase_nodepool.apply_async(args=[num, machine], eta=start_time)
-        # result = increase_nodepool.apply_async(args=[num, machine], countdown=15)
+        min_node_count = increase_nodepool.apply_async(
+            args=[num, machine], eta=start_time
+        )
+        # min_node_count = increase_nodepool.apply_async(  # testing
+        #     args=[num, machine], countdown=5
+        # ).get()
+        time.sleep(2)  # Avoid error 400 Cluster is running incompatible operation
+        res_inc = increase_nodes.apply_async(args=[min_node_count, num, machine])
         event.task_submitted = True
-        event.task_id = result.id
+        event.task_id = res_inc.id
         return response
