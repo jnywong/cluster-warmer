@@ -11,8 +11,7 @@ const FormComponent = () => {
     start_time: '',
     end_time: '',
     num_users: '',
-    cpus_per_user: '',
-    memory_per_user: '',
+    machine: '',
   });
 
   const handleChange = (e) => {
@@ -93,24 +92,12 @@ const FormComponent = () => {
       </div>
       <div className="mb-4">
         <label>
-          CPUs per user
+          Machine type
           <input
-            name="cpus_per_user"
+            name="machine"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="number"
-            value={formData.cpus_per_user}
-            onChange={handleChange}
-          />
-        </label>
-      </div>
-      <div className="mb-4">
-        <label>
-          RAM (GB) per user
-          <input
-            name="memory_per_user"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="number"
-            value={formData.memory_per_user}
+            type="text"
+            value={formData.machine}
             onChange={handleChange}
           />
         </label>
