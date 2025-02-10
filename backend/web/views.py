@@ -54,4 +54,5 @@ class EventViewSet(viewsets.ModelViewSet):
         res_inc = increase_nodes.apply_async(args=[min_node_count, num, machine])
         event.task_submitted = True
         event.task_id = res_inc.id
+        event.save()
         return response
