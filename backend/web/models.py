@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -31,16 +32,21 @@ class Event(models.Model):
     An event model that stores information needed to prewarm a GKE cluster.
     """
 
-    class JobStatus(models.IntegerChoices):
-        """Enum for various job statuses."""
+    class TaskStatus(models.IntegerChoices):
+        """Enum for various celery task statuses."""
 
         NOT_SUBMITTED = 0
         PENDING = 1
-        QUEUED = 2
-        RUNNING = 3
-        COMPLETED = 4
-        FAILED = 5
-        CANCELLED = 6
+        RUNNING = 2
+        COMPLETED = 3
+        FAILED = 4
+        CANCELLED = 5
+
+    def get_machines():
+        return {i: i for i in settings.MACHINE_LIST}
+
+    # id
+    id = models.AutoField(primary_key=True)  # noqa
 
     # the name of the event
     name = models.CharField(max_length=128)
@@ -57,19 +63,16 @@ class Event(models.Model):
     # number of users
     num_users = models.IntegerField()
 
-    # CPUs per user
-    cpus_per_user = models.FloatField()
+    # machine type
+    machine = models.TextField(choices=get_machines())
 
-    # memory per user
-    memory_per_user = models.FloatField()
+    # celery task submitted?
+    task_submitted = models.BooleanField(default=False)
 
-    # celery job submitted?
-    job_submitted = models.BooleanField(default=False)
-
-    # celery job status
-    job_status = models.IntegerField(
-        default=JobStatus.NOT_SUBMITTED, choices=JobStatus.choices
+    # celery task status
+    task_status = models.IntegerField(
+        default=TaskStatus.NOT_SUBMITTED, choices=TaskStatus.choices
     )
 
-    def __str__(self):
-        return self.name
+    # celery task_id
+    task_id = models.CharField(max_length=128, blank=True)
