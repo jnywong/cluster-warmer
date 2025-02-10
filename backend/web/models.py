@@ -32,16 +32,6 @@ class Event(models.Model):
     An event model that stores information needed to prewarm a GKE cluster.
     """
 
-    class TaskStatus(models.IntegerChoices):
-        """Enum for various celery task statuses."""
-
-        NOT_SUBMITTED = 0
-        PENDING = 1
-        RUNNING = 2
-        COMPLETED = 3
-        FAILED = 4
-        CANCELLED = 5
-
     def get_machines():
         return {i: i for i in settings.MACHINE_LIST}
 
@@ -68,11 +58,6 @@ class Event(models.Model):
 
     # celery task submitted?
     task_submitted = models.BooleanField(default=False)
-
-    # celery task status
-    task_status = models.IntegerField(
-        default=TaskStatus.NOT_SUBMITTED, choices=TaskStatus.choices
-    )
 
     # celery task_id
     task_id = models.CharField(max_length=128, blank=True)
