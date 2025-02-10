@@ -1,5 +1,7 @@
 from django.views.generic import TemplateView
 from rest_framework import mixins, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .models import Cluster, Event
 from .serializers import ClusterSerializer, EventSerializer
@@ -31,3 +33,9 @@ class EventViewSet(viewsets.ModelViewSet):
 
     serializer_class = EventSerializer
     queryset = Event.objects.all()
+
+    @action(detail=False, methods="POST")
+    def create_and_submit(self, request):
+        self.create(request)
+
+        return Response("Event created and task submitted.")
