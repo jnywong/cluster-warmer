@@ -46,7 +46,7 @@ class EventViewSet(viewsets.ModelViewSet):
         machine = event.machine
         min_node_count = increase_nodepool.apply_async(
             args=[num, machine], eta=start_time
-        )
+        ).get()
         # min_node_count = increase_nodepool.apply_async(  # testing
         #     args=[num, machine], countdown=5
         # ).get()
