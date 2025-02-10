@@ -34,5 +34,16 @@ GCP_CREDENTIALS = service_account.Credentials.from_service_account_file(
     Path.joinpath(Path(__file__).resolve().parent, GCP_SA_KEY)
 )
 
+MACHINE_LIST = {
+    "e2-medium": [
+        1,  # vCPUs
+        4,  # Memory
+    ],  # e2-medium: 2 vCPUs, 50% of CPU time = 100% CPU time and effectively consuming 1 core.
+    "n2-standard-2": [
+        2,  # vCPUs
+        8,  # Memory
+    ],  # https://cloud.google.com/compute/docs/general-purpose-machines#n2_series
+}
+
 # React settings
 CORS_ORIGIN_WHITELIST = [""]

@@ -11,16 +11,7 @@ class Command(BaseCommand):
         """
         Get resources from machine types.
         """
-        self._dict = {
-            "e2-medium": [
-                1,  # vCPUs
-                4,  # Memory
-            ],  # e2-medium: 2 vCPUs, 50% of CPU time = 100% CPU time and effectively consuming 1 core.
-            "n2-standard-2": [
-                2,  # vCPUs
-                8,  # Memory
-            ],  # https://cloud.google.com/compute/docs/general-purpose-machines#n2_series
-        }
+        self._dict = settings.MACHINE_LIST
 
     def parse_response(self, input_data):
         for i in range(len(input_data.node_pools)):
