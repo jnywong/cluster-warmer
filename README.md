@@ -93,7 +93,7 @@ where you can see two apps `core` and `web`, and `manage.py`
 └── web
 ```
 
-When running for the first time, copy `core/local_settings.example.py` to `core/local_settings.py` – do not check this local version into version control. Use `local_settings.py` to provide specific/sensitive settings, such as the relative file location of the GKE service account key, etc.
+When running for the first time, copy `core/local_settings.example.py` to `core/local_settings.py` – do **not** check this local version into version control. Use `local_settings.py` to provide specific/sensitive settings, such as the relative file location of the GKE service account key, etc.
 
 Create the database, initialise it with GKE cluster information and (optionally) create a superuser admin account
 
@@ -110,11 +110,7 @@ Run the development server at [http://127.0.0.1:8000/](http://127.0.0.1:8000/) w
 python manage.py runserver
 ```
 
-You can access the Django REST API at
-
-```bash
-http://127.0.0.1:8000/api/
-```
+You can access the Django REST API at [http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/).
 
 Remember to have the following services running in separate Terminal windows/processes if you haven't already:
 
