@@ -26,8 +26,10 @@ export default function HomePage() {
           <div className="w-full 2xl:w-1/2 px-8 pt-6 pb-8 mb-4">
             <Status />
           </div>
-          <div className="w-full 2xl:w-1/2 px-8 pt-6 pb-8 mb-4">
-            <FormComponent />
+          <div className="flex grow flex-col w-full 2xl:w-1/2 px-8 pt-6 pb-8 mb-4">
+            <div className="pr-4">
+              <FormComponent />
+            </div>
           </div>
         </div>
       </div>
