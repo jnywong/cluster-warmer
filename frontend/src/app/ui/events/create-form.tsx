@@ -59,33 +59,27 @@ const FormComponent = () => {
         </label>
       </div>
       <div className="mb-4">
-        <input
-          name="start_time"
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Event start"
-          type="datetime-local"
-          value={formData.start_time}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="mb-4">
-        <input
-          name="end_time"
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Event end"
-          type="datetime-local"
-          value={formData.end_time}
-          onChange={handleChange}
-        />
+        <label>
+          Event start
+          <input
+            name="start_time"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Event start"
+            type="datetime-local"
+            value={formData.start_time}
+            onChange={handleChange}
+          />
+        </label>
       </div>
       <div className="mb-4">
         <label>
-          Number of users
+          Event end
           <input
-            name="num_users"
+            name="end_time"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="number"
-            value={formData.num_users}
+            placeholder="Event end"
+            type="datetime-local"
+            value={formData.end_time}
             onChange={handleChange}
           />
         </label>
@@ -99,6 +93,18 @@ const FormComponent = () => {
             placeholder="e2-medium"
             type="text"
             value={formData.machine}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <div className="mb-4">
+        <label>
+          Number of machines
+          <input
+            name="num_users"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="number"
+            value={formData.num_users}
             onChange={handleChange}
           />
         </label>

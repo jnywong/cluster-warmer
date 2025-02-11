@@ -16,13 +16,13 @@ export async function Status() {
             </li>
           ))}
         </ul>
-        <br></br>
+        {/* <br></br>
         Nodes online:
         <ul>
           {nodes.items.map((c) => (
             <li key={c.metadata.name}>{c.metadata.name}</li>
           ))}
-        </ul>
+        </ul> */}
       </div>
     </div>
   );
