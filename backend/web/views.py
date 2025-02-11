@@ -54,7 +54,7 @@ class EventViewSet(viewsets.ModelViewSet):
         # min_node_count = increase_nodepool.apply_async(  # testing
         #     args=[num, machine], countdown=5
         # ).get()
-        time.sleep(2)  # Avoid error 400 Cluster is running incompatible operation
+        time.sleep(5)  # Avoid error 400 Cluster is running incompatible operation
         res_inc = increase_nodes.apply_async(args=[min_node_count, num, machine])
         event.task_submitted = True
         event.task_id = res_inc.id
