@@ -96,3 +96,24 @@ def decrease_nodepool(num, machine):
 @shared_task
 def increase_nodes(min_node_count, num, machine):
     async_to_sync(increase_node_pool_size)(min_node_count, get_name(machine), num)
+
+
+def get_min_node_count():
+    n_min = {}
+    for machine in settings.MACHINE_LIST:
+        name = get_name(machine)
+        client = container_v1.ClusterManagerClient(credentials=settings.GCP_CREDENTIALS)
+        request = container_v1.GetNodePoolRequest(name=name)
+        response = client.get_node_pool(request=request)
+        n_min[machine] = response.autoscaling.min_node_count
+
+    return n_min
+
+
+@shared_task
+def nodepool_size():
+    """
+    Periodic task to get minimum node count of nodepool.
+    """
+    min_node_count = get_min_node_count()
+    return min_node_count
