@@ -1,11 +1,14 @@
 import time
 
 from django.views.generic import TemplateView
+from django_celery_results.models import TaskResult
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Cluster, Event
-from .serializers import ClusterSerializer, EventSerializer
+from .serializers import ClusterSerializer, EventSerializer, NodepoolSerializer
 from .tasks import decrease_nodepool, increase_nodepool, increase_nodes
 
 
@@ -66,3 +69,14 @@ class EventViewSet(viewsets.ModelViewSet):
         #     args=[num, machine], countdown=60
         # ).get()
         return response
+
+
+class NodepoolView(APIView):
+    """
+    View to monitor minimum node counts.
+    """
+
+    def get(self, request):
+        task_results = TaskResult.objects.filter(task_name="web.tasks.nodepool_size")
+        serializer = NodepoolSerializer(task_results, many=True)
+        return Response(serializer.data)
