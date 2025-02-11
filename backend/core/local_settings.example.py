@@ -26,9 +26,9 @@ SECRET_KEY = ""
 
 # Google Cloud settings
 
-GCP_PROJECT_ID = ""
-GCP_ZONE = ""
-GCP_CLUSTER = ""
+GCP_PROJECT_ID = "takehome-appeng-2025"
+GCP_ZONE = "us-central1-b"
+GCP_CLUSTER = "hub"
 GCP_SA_KEY = ""
 GCP_CREDENTIALS = service_account.Credentials.from_service_account_file(
     Path.joinpath(Path(__file__).resolve().parent, GCP_SA_KEY)
@@ -48,4 +48,4 @@ MACHINE_LIST = {
 }
 
 # React settings
-CORS_ORIGIN_WHITELIST = [""]
+CORS_ORIGIN_WHITELIST = ["http://localhost:3000"]
