@@ -38,6 +38,26 @@ async def increase_min_node_count(name, num):
     return response_get.autoscaling.min_node_count
 
 
+async def decrease_min_node_count(name, num):
+    client = container_v1.ClusterManagerAsyncClient(
+        credentials=settings.GCP_CREDENTIALS
+    )
+    request = container_v1.GetNodePoolRequest(
+        name=name
+    )  # Get current autoscaling config
+    response_get = await client.get_node_pool(request=request)
+
+    config = container_v1.NodePoolAutoscaling(
+        enabled=response_get.autoscaling.enabled,
+        min_node_count=response_get.autoscaling.min_node_count - num,
+        max_node_count=response_get.autoscaling.max_node_count,
+        location_policy=response_get.autoscaling.location_policy,
+    )
+    request = container_v1.SetNodePoolAutoscalingRequest(name=name, autoscaling=config)
+    await client.set_node_pool_autoscaling(request=request)
+    return response_get.autoscaling.min_node_count
+
+
 async def increase_node_pool_size(min_node_count, name, num):
     client = container_v1.ClusterManagerAsyncClient(
         credentials=settings.GCP_CREDENTIALS
@@ -59,6 +79,17 @@ def increase_nodepool(num, machine):
     also increase the size of the nodepool with set_node_pool_size() to warm the cluster up.
     """
     min_node_count = async_to_sync(increase_min_node_count)(get_name(machine), num)
+    return min_node_count
+
+
+@shared_task
+def decrease_nodepool(num, machine):
+    """
+    Celery task to decrease MINIMUM node count in nodepool.
+
+    Decrease the minimum node count with set_node_pool_autoscaling().
+    """
+    min_node_count = async_to_sync(decrease_min_node_count)(get_name(machine), num)
     return min_node_count
 
 

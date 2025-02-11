@@ -6,7 +6,7 @@ from rest_framework.decorators import action
 
 from .models import Cluster, Event
 from .serializers import ClusterSerializer, EventSerializer
-from .tasks import increase_nodepool, increase_nodes
+from .tasks import decrease_nodepool, increase_nodepool, increase_nodes
 
 
 class IndexView(TemplateView):
@@ -38,10 +38,14 @@ class EventViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods="POST")
     def create_and_submit(self, request):
+        """
+        Create event object and apply celery tasks on POST.
+        """
         response = self.create(request)
         event_id = response.data["id"]
         event = Event.objects.get(id=event_id)
         start_time = event.start_time
+        end_time = event.end_time
         num = event.num_users
         machine = event.machine
         min_node_count = increase_nodepool.apply_async(
@@ -55,4 +59,10 @@ class EventViewSet(viewsets.ModelViewSet):
         event.task_submitted = True
         event.task_id = res_inc.id
         event.save()
+        min_node_count = decrease_nodepool.apply_async(
+            args=[num, machine], eta=end_time
+        ).get()
+        # min_node_count = decrease_nodepool.apply_async(  # testing
+        #     args=[num, machine], countdown=60
+        # ).get()
         return response
