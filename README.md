@@ -1,5 +1,8 @@
 # Cluster Warmer 🔥
 
+> [!NOTE]
+> This project is a proof of concept and not production-ready.
+
 ![Screenshot of app](demo.png)
 
 **Prepare in advance.** Scale up machine resources for your JupyterHub ahead of time.
